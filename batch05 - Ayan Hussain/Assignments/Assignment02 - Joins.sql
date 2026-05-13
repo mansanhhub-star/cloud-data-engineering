@@ -1,3 +1,5 @@
+USE BikeStores
+
 -- ============================================================
 --  ASSIGNMENT 02 — Joins
 --  Database : BikeStores
@@ -13,10 +15,13 @@
 -- ============================================================
 
 -- Write your query below:
-SELECT PP.product_name, PP.list_price, PC.category_name
-	FROM Production.Products AS PP
-	JOIN Production.Categories AS PC
-	ON PP.category_id = PC.category_id
+SELECT 
+	 PP.product_name
+	,PP.list_price
+	,PC.category_name
+FROM Production.Products AS PP
+JOIN Production.Categories AS PC
+ON PP.category_id = PC.category_id
 ORDER BY PP.product_name
 
 
@@ -32,11 +37,14 @@ ORDER BY PP.product_name
 -- ============================================================
 
 -- Write your query below:
-SELECT SC.first_name + ' ' + SC.last_name AS full_name, SO.order_id, SO.order_date
-	FROM Sales.Orders AS SO
-	JOIN Sales.Customers AS SC
-		ON SO.customer_id = SC.customer_id
-	ORDER BY SO.order_date DESC;
+SELECT 
+	 SC.first_name + ' ' + SC.last_name AS full_name
+	,SO.order_id
+	,SO.order_date
+FROM Sales.Orders AS SO
+JOIN Sales.Customers AS SC
+	ON SO.customer_id = SC.customer_id
+ORDER BY SO.order_date DESC;
 
 
 
@@ -51,13 +59,17 @@ SELECT SC.first_name + ' ' + SC.last_name AS full_name, SO.order_id, SO.order_da
 -- ============================================================
 
 -- Write your query below:
-SELECT * 
-	FROM Production.Products AS PP
-	JOIN Production.Categories AS PC
-		ON PP.category_id = PC.category_id
-	JOIN Production.Brands AS PB
-		ON PP.brand_id = PB.brand_id
-	ORDER BY PB.brand_name
+SELECT 
+	 PP.product_name
+	,PP.list_price
+	,PC.category_name
+	,PB.brand_name
+FROM Production.Products AS PP
+JOIN Production.Categories AS PC
+	ON PP.category_id = PC.category_id
+JOIN Production.Brands AS PB
+	ON PP.brand_id = PB.brand_id
+ORDER BY PB.brand_name
 
 
 
@@ -73,8 +85,15 @@ SELECT *
 
 -- Write your query below:
 
-
-
+SELECT 
+	 PP.product_id
+	,PP.product_name
+	,SOI.order_id
+	,SOI.item_id 
+FROM Production.Products AS PP
+LEFT JOIN Sales.Order_items AS SOI
+	ON PP.product_id = SOI.product_id
+ORDER BY SOI.order_id
 
 -- ============================================================
 --  Question 5
@@ -86,7 +105,13 @@ SELECT *
 
 -- Write your query below:
 
-
+SELECT 
+	 PP.product_id
+	,PP.product_name
+FROM Production.Products AS PP
+LEFT JOIN Sales.Order_items AS SOI
+	ON PP.product_id = SOI.product_id
+WHERE SOI.order_id IS NULL
 
 
 -- ============================================================
@@ -100,9 +125,15 @@ SELECT *
 -- ============================================================
 
 -- Write your query below:
-
-
-
+SELECT 
+	 SS.store_id
+	,SS.store_name
+	,SO.order_id
+	,SO.order_date
+FROM Sales.Orders AS SO
+RIGHT JOIN Sales.Stores AS SS
+	ON SO.store_id = SS.store_id
+--INSERT INTO Sales.Stores VALUES ('Ahsan Store', '(92) 321-2827700', 'ahsan@gmail.com', 'Korangi', 'Karachi', 'Sindh', 74900)
 
 -- ============================================================
 --  Question 7
@@ -115,6 +146,12 @@ SELECT *
 -- ============================================================
 
 -- Write your query below:
+SELECT 
+	 SS.first_name + ' ' + SS.last_name AS staff_name
+	,SM.first_name + ' ' + SM.last_name AS manager_name
+FROM Sales.Staffs AS SS
+JOIN Sales.Staffs AS SM
+	ON SM.staff_id = SS.manager_id
 
 
 
@@ -130,9 +167,11 @@ SELECT *
 -- ============================================================
 
 -- Write your query below:
-
-
-
+SELECT SS.store_name, PB.brand_name
+	FROM Sales.Stores AS SS
+	CROSS JOIN Production.Brands AS PB
+-- Your ans is 27  3 * 9
+-- because if created an extra record in store so mine is 36 4 * 9
 
 -- ============================================================
 --  Question 9
@@ -145,3 +184,17 @@ SELECT *
 -- ============================================================
 
 -- Write your query below:
+SELECT 
+	 SC.first_name + ' ' + SC.last_name AS full_name
+	,SO.order_id
+	,SO.order_date
+	,PP.product_name
+	,PP.list_price
+FROM Sales.Orders AS SO
+JOIN Sales.Customers AS SC
+	ON SO.customer_id = SC.customer_id
+JOIN Sales.Order_items AS SOI
+	ON SO.order_id = SOI.order_id
+JOIN Production.Products AS PP
+	ON SOI.product_id = PP.product_id
+ORDER BY SO.order_date

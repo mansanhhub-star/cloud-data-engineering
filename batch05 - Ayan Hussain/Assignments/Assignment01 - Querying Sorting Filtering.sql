@@ -5,11 +5,18 @@ USE BikeStores;
 --  Topics   : SELECT, WHERE, ORDER BY, TOP/OFFSET-FETCH,
 --             DISTINCT, AND / OR
 -- ============================================================
-SELECT DISTINCT brand_id, model_year FROM Production.Products;
+SELECT 
+	DISTINCT brand_id, model_year 
+FROM Production.Products;
 
-SELECT TOP(10) * FROM Production.Products ORDER BY list_price DESC;
+SELECT 
+	TOP(10) * 
+FROM Production.Products 
+ORDER BY list_price DESC;
 
-SELECT * FROM Production.Products
+SELECT 
+	* 
+FROM Production.Products
 WHERE list_price > 500 AND (model_year = 2016 OR model_year = 2017)
 ORDER BY list_price DESC
 OFFSET 10 ROWS
@@ -25,12 +32,13 @@ FETCH NEXT 50 ROWS ONLY;
 -- ============================================================
 
 -- Write your query below:
-SELECT first_name, last_name, city, phone FROM Sales.Customers
+SELECT 
+	 first_name
+	,last_name
+	,city
+	,phone 
+FROM Sales.Customers
 WHERE state = 'CA' AND phone IS NOT NULL
-
-SELECT * FROM Sales.Customers
-
-
 
 -- ============================================================
 --  Question 2 — ORDER BY (Multiple Columns)
@@ -42,7 +50,9 @@ SELECT * FROM Sales.Customers
 
 -- Write your query below:
 
-SELECT * FROM Production.Products
+SELECT 
+	* 
+FROM Production.Products
 ORDER BY model_year DESC, list_price 
 
 
@@ -56,7 +66,9 @@ ORDER BY model_year DESC, list_price
 -- ============================================================
 
 -- Part a:
-SELECT TOP(5) * FROM Production.Products 
+SELECT 
+	TOP(5) * 
+FROM Production.Products 
 ORDER BY list_price DESC
 
 

@@ -11,7 +11,7 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
-
+.vs/
 # Python
 __pycache__/
 *.py[cod]
