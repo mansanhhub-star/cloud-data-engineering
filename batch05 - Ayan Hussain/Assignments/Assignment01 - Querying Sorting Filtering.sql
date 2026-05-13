@@ -1,9 +1,20 @@
+USE BikeStores;
 -- ============================================================
 --  ASSIGNMENT 01 — Querying, Sorting & Filtering
 --  Database : BikeStores
 --  Topics   : SELECT, WHERE, ORDER BY, TOP/OFFSET-FETCH,
 --             DISTINCT, AND / OR
 -- ============================================================
+SELECT DISTINCT brand_id, model_year FROM Production.Products;
+
+SELECT TOP(10) * FROM Production.Products ORDER BY list_price DESC;
+
+SELECT * FROM Production.Products
+WHERE list_price > 500 AND (model_year = 2016 OR model_year = 2017)
+ORDER BY list_price DESC
+OFFSET 10 ROWS
+FETCH NEXT 50 ROWS ONLY;
+
 
 
 -- ============================================================
@@ -14,7 +25,10 @@
 -- ============================================================
 
 -- Write your query below:
+SELECT first_name, last_name, city, phone FROM Sales.Customers
+WHERE state = 'CA' AND phone IS NOT NULL
 
+SELECT * FROM Sales.Customers
 
 
 
@@ -28,7 +42,8 @@
 
 -- Write your query below:
 
-
+SELECT * FROM Production.Products
+ORDER BY model_year DESC, list_price 
 
 
 -- ============================================================
@@ -41,11 +56,13 @@
 -- ============================================================
 
 -- Part a:
+SELECT TOP(5) * FROM Production.Products 
+ORDER BY list_price DESC
 
 
 -- Part b:
-
-
+SELECT TOP(5) PERCENT * FROM Production.Products 
+ORDER BY list_price
 
 
 -- ============================================================
@@ -57,17 +74,27 @@
 --    b) Page 2  (rows 11 – 20)
 --    c) Page 3  (rows 21 – 30)
 -- ============================================================
+DROP PROCEDURE #GetProductsPaged
+CREATE PROCEDURE #GetProductsPaged
+    @PageNumber INT,
+    @PageSize INT
+AS
+BEGIN
+    SELECT *
+    FROM Production.Products
+    ORDER BY list_price DESC
+    OFFSET (@PageNumber - 1) * @PageSize ROWS
+    FETCH NEXT @PageSize ROWS ONLY;
+END;
 
 -- Page 1:
-
+EXEC #GetProductsPaged 1, 10;
 
 -- Page 2:
-
+EXEC #GetProductsPaged 2, 10;
 
 -- Page 3:
-
-
-
+EXEC #GetProductsPaged 2, 10;
 
 -- ============================================================
 --  Question 5 — DISTINCT
@@ -81,13 +108,17 @@
 -- ============================================================
 
 -- Part a:
-
+SELECT DISTINCT state
+FROM Sales.Customers
+ORDER BY state ASC;
 
 -- Part b:
-
+SELECT DISTINCT state, city
+FROM Sales.Customers
+ORDER BY state, city;
 
 -- Part c:
-
+SELECT DISTINCT model_year FROM Production.Products
 
 
 
@@ -103,3 +134,9 @@
 -- ============================================================
 
 -- Write your query below:
+SELECT product_id, product_name, brand_id, category_id, list_price
+FROM Production.Products
+WHERE 
+    list_price BETWEEN 500 AND 1500
+    AND model_year IN (2019, 2020)
+ORDER BY list_price 

@@ -13,6 +13,12 @@
 -- ============================================================
 
 -- Write your query below:
+SELECT PP.product_name, PP.list_price, PC.category_name
+	FROM Production.Products AS PP
+	JOIN Production.Categories AS PC
+	ON PP.category_id = PC.category_id
+ORDER BY PP.product_name
+
 
 
 
@@ -26,6 +32,11 @@
 -- ============================================================
 
 -- Write your query below:
+SELECT SC.first_name + ' ' + SC.last_name AS full_name, SO.order_id, SO.order_date
+	FROM Sales.Orders AS SO
+	JOIN Sales.Customers AS SC
+		ON SO.customer_id = SC.customer_id
+	ORDER BY SO.order_date DESC;
 
 
 
@@ -40,7 +51,13 @@
 -- ============================================================
 
 -- Write your query below:
-
+SELECT * 
+	FROM Production.Products AS PP
+	JOIN Production.Categories AS PC
+		ON PP.category_id = PC.category_id
+	JOIN Production.Brands AS PB
+		ON PP.brand_id = PB.brand_id
+	ORDER BY PB.brand_name
 
 
 
