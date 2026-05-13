@@ -120,17 +120,21 @@ EXEC #GetProductsPaged 2, 10;
 -- ============================================================
 
 -- Part a:
-SELECT DISTINCT state
+SELECT 
+	DISTINCT state
 FROM Sales.Customers
 ORDER BY state ASC;
 
 -- Part b:
-SELECT DISTINCT state, city
+SELECT 
+	DISTINCT state, city
 FROM Sales.Customers
 ORDER BY state, city;
 
 -- Part c:
-SELECT DISTINCT model_year FROM Production.Products
+SELECT 
+	DISTINCT model_year 
+FROM Production.Products
 
 
 
@@ -146,7 +150,12 @@ SELECT DISTINCT model_year FROM Production.Products
 -- ============================================================
 
 -- Write your query below:
-SELECT product_id, product_name, brand_id, category_id, list_price
+SELECT 
+	 product_id
+	,product_name
+	,brand_id
+	,category_id
+	,list_price
 FROM Production.Products
 WHERE 
     list_price BETWEEN 500 AND 1500
